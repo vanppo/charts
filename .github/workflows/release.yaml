@@ -21,6 +21,11 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
+      - uses: actions/cache@v4.0.2
+        with:
+          key: ${{ runner.os }}-artifacts
+          path: dist
+
       - run: helm package -d dist charts/*
 
       - run: helm repo index dist
