@@ -1,0 +1,37 @@
+name: Release Charts
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  release:
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.7
+        with:
+          fetch-depth: 0
+
+      - uses: azure/setup-helm@v4.2.0
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - uses: actions/cache@v4.0.2
+        with:
+          key: ${{ runner.os }}-artifacts
+          path: dist
+
+      - run: helm package -d dist charts/*
+
+      - run: helm repo index dist
+
+      - uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          path: dist
+
+      - uses: actions/deploy-pages@v4.0.5
