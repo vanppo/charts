@@ -10,6 +10,7 @@ jobs:
   release:
     permissions:
       pages: write
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.7
