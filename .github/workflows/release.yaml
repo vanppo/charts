@@ -24,7 +24,7 @@ jobs:
 
       - run: helm repo index dist
 
-      - uses: actions/upload-pages-artifact@3.0.1
+      - uses: actions/upload-pages-artifact@v3.0.1
         with:
           path: dist
 
